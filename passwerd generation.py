@@ -1,44 +1,34 @@
-from tkinter import*
-from random import randint
-root=Tk()
-root.title('password genyrator') 
-root.geometry("500x300")
+from tkinter import * 
+import time
 
+root = Tk()
+root.geometry("300x250")
+root.title("Counter")
+h = 0
 
-#lable frame
+def loop():
+    global h
+    h += 1
+    count_label.config(text=h)
 
-def new_pass():
-    pw_entry.delete(0, END )
+def reset():
+    global h
+    h = 0
+    count_label.config(text=h)
 
-    pw_length=int(my_entry.get())
+def show_time():
+    current_time = time.strftime('%H:%M:%S')
+    time_label.config(text=current_time)
 
-    my_password=""
+# إنشاء العلامات
+count_label = Label(root, text=h, bg="#F5E216", font=("Arial", 20))
+count_label.place(x=120, y=5)
 
-    for x in range(pw_length):
-        my_password +=chr(randint(33,126))
+time_label = Label(root, bg="#F5E216", font=("Arial", 10))
+time_label.place(x=120, y=50)
 
-    pw_entry.insert(0,my_password)    
+Button(root, text="Click", command=loop, width=15, height=2, bg="#FFA62F", activebackground="#F5E216", activeforeground="#FFA500", cursor="hand1").place(x=120, y=80)
+Button(root, text="Reset", command=reset, width=15, height=2, bg="#FF6347", activebackground="#F5E216", activeforeground="#FFA500", cursor="hand1").place(x=120, y=130)
+Button(root, text="Show Time", command=show_time, width=15, height=2, bg="#32CD32", activebackground="#F5E216", activeforeground="#FFA500", cursor="hand1").place(x=120, y=180)
 
-def clipper():
-    root.clipboard_clear()
-
-    root.clipboard_append(pw_entry.get())
-
-If=LabelFrame(root,text="how many characters")
-If.pack(pady=20)
-
-my_entry=Entry(If,font=("Helvatica",24))
-my_entry.pack(padx=20,pady=20)
-
-pw_entry=Entry(root,font=("Helvatica",24),bd=0,bg="systembuttonface")
-pw_entry.pack(pady=20)
-
-my_frame= Frame(root)
-my_frame.pack(pady=20)
-
-my_button=Button(my_frame,text="generate strong password",command=new_pass)
-my_button.grid(row=0,column=0,pady=10)
-
-clip_button=Button(my_frame,text=" Copy ",command=clipper)
-clip_button.grid(row=0,column=1,padx=10)
 root.mainloop()
